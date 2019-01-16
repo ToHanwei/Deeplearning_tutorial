@@ -87,7 +87,8 @@ class Network(object):
             activation = sigmoid(z)
             activations.append(activation)
         #backward pass
-        delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+        delta = (activations[-1] - y) * sigmoid_prime(zs[-1])
+        #delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
         # Note that the variable l in the loop below is used a little
@@ -116,7 +117,7 @@ class Network(object):
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""
-        return (out_activations-y)
+        return (output_activations-y)
 
 ####Miscellaneous functions
 def sigmoid(z):
@@ -127,7 +128,5 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function"""
     return sigmoid(z)*(1-sigmoid(z))
-
-
 
 
